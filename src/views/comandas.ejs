@@ -1,0 +1,52 @@
+<%- include ('_header')  %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-10 col-md-5 col-lg-4 col-xl-3">
+            <form action="/comandas" method="post">
+                <label for="f1">Desde:</label>
+                <input class="form-control" type="date" id="f1" value="<%= f1 %>" name="f1">
+                <label for="f2">Hasta:</label>
+                <input class="form-control" type="date" id="f2" value="<%= f2 %>" name="f2"> <br>
+                <button class="btn btn-primary" id="btn_buscar" type="submit">Buscar</button>
+            </form> <br>
+            <div class="container">
+
+                <div class="card">
+                    <div class="card-header">
+                        Eliminar Comanda
+                    </div>
+                    <div class="card-body">
+                        <label for="pass">Contraseña:</label>
+                        <input type="password" class="form-control" name="pass" id="pass">
+                        <div id="div_del_comanda">
+                            <form action="/del_comanda" method="post">
+                                <label for="id_del_coma"># Comanda:</label>
+                                <input type="number" class="form-control" name="id_coma">
+                                <br>
+                                <button class="btn btn-danger">Eliminar Comanda</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    $("#div_del_comanda").hide();
+                    $("#pass").keyup(() => {
+                        if ($("#pass").val() == "1234cucu") {
+                            $("#div_del_comanda").show();
+                        } else {
+                            $("#div_del_comanda").hide();
+                        }
+                    })
+                </script>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9">
+            <div id="div_table">
+                <%- include ('_tabla_comensales')  %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include ('_footer')  %>

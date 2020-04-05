@@ -1,0 +1,41 @@
+<table class="table table-hover table-sm">
+    <thead class="thead-dark">
+        <tr>
+            <th># Comanda</th>
+            <th>Fecha</th>
+            <th>Comensal</th>
+            <th>Producto</th>
+            <th>Costo</th>
+            <th>Cant.</th>
+            <th>total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if(comandas){ %>
+        <% var total = 0; %>
+        <% var clase = ["table-primary","table-secondary","table-success","table-danger","table-warning","table-info"]; %>
+        <% for(var i = comandas.length - 1; i >= 0; i--) { %>
+        <% total = total + comandas[i].total; %>
+        <% var j = comandas[i].id_coma % 6; %>
+        <tr class="<%= clase[j] %>"">
+            <td><%= comandas[i].id_coma %> : (S/ <%= comandas[i].suma %> )</td>
+            <td><%= comandas[i].fecha.toLocaleString(); %></td>
+            <td><%= comandas[i].comensal %></td>
+            <td><%= comandas[i].producto%></td>
+            <td><%= comandas[i].costo %></td>
+            <td><%= comandas[i].cant %></td>
+            <td><%= comandas[i].total %></td>
+        </tr>
+        <% } %>
+        <tr class=" font-weight-bold">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Total:</td>
+            <td id="total_cobrado"><%= total %></td>
+        </tr>
+        <% } %>
+    </tbody>
+</table>

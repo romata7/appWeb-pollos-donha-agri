@@ -1,0 +1,148 @@
+<%- include ('_header')  %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-10 col-md-5 col-lg-4 col-xl-3">
+            <h3 class="text-center">Agregar Producto</h3>
+            <form action="/add_prod" method="post">
+                <label for="producto">Producto:</label>
+                <input type="text" class="form-control" name="producto" maxlength="50" required autofocus>
+                <label for="costo">Costo:</label>
+                <input type="number" step=".10" class="form-control" name="costo" required><br>
+                <button class="btn btn-primary" type="submit">
+                    Guardar Producto
+                </button>
+            </form>
+        </div>
+        <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9">
+            <h3 class="text-center">Lista de Productos</h3>
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Producto</th>
+                        <th>Costo</th>
+                        <th>
+                            <input type="password" class="form-control" id="prod_pass" placeholder="Contraseña ^_^">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if(results) { %>
+                    <% for(var i=results.length - 1; i>=0 ; i--){ %>
+                    <tr>
+                        <th><%= i + 1 %></th>
+                        <th><%= results[i].producto %></th>
+                        <th><%= results[i].costo %></th>
+                        <th id="th<%= results[i].id_prod %>">
+                            <!-- Trigger the modal with a span -->
+                            <span data-toggle="modal" data-target="#myModal<%= results[i].id_prod %>">
+                                <img src="img/icons8-delete-bin-64.png" alt="Eliminar" height="35">
+                            </span>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal<%= results[i].id_prod %>" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Eliminar?</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class="table table-bordered">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th>Producto</th>
+                                                        <th>Costo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th><%= results[i].producto %></th>
+                                                        <th><%= results[i].costo %></th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="/delete_prod/<%= results[i].id_prod %>" class="btn btn-danger">
+                                                Eliminar
+                                            </a>
+                                            <button type="button" class="btn btn-success"
+                                                data-dismiss="modal">Cancelar</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Trigger the modal with a span -->
+                            <span data-toggle="modal" data-target="#myModalEdit<%= results[i].id_prod %>">
+                                <img src="img/icons8_edit_64px.png" alt="Eliminar" height="35">
+                            </span>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModalEdit<%= results[i].id_prod %>" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Modificar?</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="/update_prod/<%= results[i].id_prod %>" method="post">
+                                                <label for="producto">Producto:</label>
+                                                <input type="text" class="form-control" name="producto" maxlength="50"
+                                                    required autofocus value="<%= results[i].producto %>">
+                                                <label for="costo">Costo:</label>
+                                                <input type="number" step=".10" class="form-control" name="costo"
+                                                    required value="<%= results[i].costo %>"><br>
+                                                <div class="text-right">
+                                                    <button class="btn btn-success" type="submit">
+                                                        Actualizar
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger"
+                                                        data-dismiss="modal">Cancelar
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    <% } %>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $("input").keyup(input => {
+        input.target.value = input.target.value.toUpperCase();
+    });
+
+    function delete_prod(id_prod) {
+        alert(id_prod);
+    };
+
+    $("th[id^='th']").hide();
+
+    $("#prod_pass").keyup((key) => {
+        if ($("#prod_pass").val() == "1234CUCU") {
+            $("th[id^='th']").show();
+        } else {
+            $("th[id^='th']").hide();
+        }
+    });
+</script>
+
+<%- include ('_footer')  %>
